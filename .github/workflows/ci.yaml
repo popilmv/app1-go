@@ -17,6 +17,10 @@ jobs:
 
       - name: Validate Go code formatting
         run: gofmt -e main.go
+
+      - name: install module
+        run: go mod init
+
   build:
     runs-on: ubuntu-latest
     needs: test
