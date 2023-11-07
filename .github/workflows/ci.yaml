@@ -1,33 +1,46 @@
 name: CI for app1-go
-
 on:
   push:
-    branches:
-      - dev
+    branches: ["dev"]
 
-jobs: 
-  test: 
+jobs:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup
+      - name: Setup Go
         uses: actions/setup-go@v3
         with:
           go-version: 1.19
-    
-      - name: validate
+
+      - name: Validate Go code formatting
         run: gofmt -e main.go
-   docker:
-    name: Docker Image
+
+  build:
     runs-on: ubuntu-latest
     needs: test
-
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+
+      - name: Build Go project
+        run: go build
+
+  docker:
+    name: Docker Image
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
@@ -38,10 +51,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          
-      - name: Build and push
+
+      - name: Get the current date and time
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
+
+      - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:${{ steps.date.outputs.date }}
