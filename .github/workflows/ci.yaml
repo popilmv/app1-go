@@ -31,7 +31,7 @@ jobs:
 
       - name: Build Go project
         run: go build
-
+        
   docker:
     name: Docker Image
     runs-on: ubuntu-latest
