@@ -63,21 +63,13 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
 
-<<<<<<< HEAD
-=======
       - name: Get the branch name
         id: branch
         run: echo "::set-output name=branch::$(echo $GITHUB_REF | sed 's/refs\/heads\///')"
 
->>>>>>> 33604c2ebbe9fa4b82c595341084960f3606ba6e
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-<<<<<<< HEAD
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:${{ steps.date.outputs.date }}
-=======
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:${{ steps.branch.outputs.branch }}-${{ steps.date.outputs.date}}
->>>>>>> 33604c2ebbe9fa4b82c595341084960f3606ba6e
-
