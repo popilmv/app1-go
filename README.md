@@ -1,5 +1,5 @@
 # app1-go
-dt2
+2
 <<<<<<< HEAD
 =======
 In this progect we configure CI 
