@@ -17,3 +17,18 @@ jobs:
 
       - name: Validate Go code formatting
         run: gofmt -e main.go
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.21
+
+      - name: Build Go project
+        run: go build
+
