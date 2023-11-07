@@ -1,5 +1,5 @@
 # app1-go
-dff1327
+1327
 <<<<<<< HEAD
 =======
 In this progect we configure CI 
