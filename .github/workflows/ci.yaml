@@ -1,4 +1,4 @@
-name: CI 
+name: CI
 on:
   push:
     branches: ["dev"]
@@ -32,9 +32,6 @@ jobs:
 
       - name: Initialize Go module
         run: go mod init github.com/popilmv/app1-go
-
-      - name: Install dependencies
-        run: go get github.com/gorilla/mux
 
       - name: Build Go project
         run: go build
