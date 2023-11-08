@@ -67,6 +67,9 @@ jobs:
         id: branch
         run: echo "::set-output name=branch::$(echo $GITHUB_REF | sed 's/refs\/heads\///')"
 
+      - name: Set TAG environment variable
+        run: echo "TAG=${{ steps.date.outputs.date }}" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
