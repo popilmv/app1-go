@@ -102,11 +102,15 @@ jobs:
           if [[ "$TAG" != "${{ needs.ci.outputs.tag }}" ]]; then
             echo "New Docker image available. Triggering CD."
           else
-          echo "TAG=$TAG" >> .env
             echo "No new Docker image available. CD not required."
             exit 1
           fi
         shell: bash
 
       - name: Set up Docker Compose - Do CD
-        run: docker-compose -f docker-compose.yaml up -d
+        run: |
+          # Завантаження нового Docker імеджу з Docker Hub
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:TAG=$(curl -s https://registry.hub.docker.com/v2/repositories/marina1327/app1-go/tags/ | jq -r '.results | sort_by(.last_pushed) | .[0].name')
+          # Запуск Docker Compose
+          docker-compose -f docker-compose.yaml up -d
+
