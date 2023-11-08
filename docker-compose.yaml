@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    image: ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:latest
+    ports:
+      - "${APP_PORT}"
+
+

@@ -1,0 +1,28 @@
+name: CD
+on:
+  push:
+    paths:
+      - 'docker-compose.yaml' 
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        run: |
+          # Завантаження нового Docker імеджу з Docker Hub
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:latest
+          # Запуск Docker Compose
+          docker-compose -f docker-compose.yaml up -d
+        env:
+          PORT: $APP_PORT
+
+
+
