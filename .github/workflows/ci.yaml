@@ -102,6 +102,7 @@ jobs:
           if [[ "$TAG" != "${{ needs.ci.outputs.tag }}" ]]; then
             echo "New Docker image available. Triggering CD."
           else
+          echo "TAG=$TAG" >> .env
             echo "No new Docker image available. CD not required."
             exit 1
           fi
