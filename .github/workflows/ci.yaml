@@ -108,8 +108,4 @@ jobs:
         shell: bash
 
       - name: Set up Docker Compose - Do CD
-        run: |
-                #docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:$TAG
-          # Запуск Docker Compose
-          docker-compose -f docker-compose.yaml up -d
-
+        run: docker-compose -f docker-compose.yaml up -d
