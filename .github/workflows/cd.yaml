@@ -1,8 +1,7 @@
 name: CD
 on:
   push:
-    paths:
-      - 'docker-compose.yaml' 
+    branches: ["dev"]
   workflow_run:
     workflows: ["CI"]
     types:
@@ -13,8 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+     
       - name: Set up Docker Compose
         run: |
           # Завантаження нового Docker імеджу з Docker Hub
