@@ -78,22 +78,3 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:${{ steps.branch.outputs.branch }}-${{ steps.date.outputs.date}}
 
 
-  CD:
-    runs-on: ubuntu-latest
-    needs: docker
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Set up Docker Compose
-        run: |
-          # Завантаження нового Docker імеджу з Docker Hub
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:${{ IMAGE_TAG }}
-          # Запуск Docker Compose
-          docker-compose -f docker-compose.yaml up -d
-        env:
-          PORT: $APP_PORT
-
