@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: marina1327/app1-go:$IMAGE_TAG
+    image: marina1327/app1-go:TAG=$(curl -s https://registry.hub.docker.com/v2/repositories/marina1327/app1-go/tags/latest/ | jq -r '.name')
     env_file: .env
     #ports:
     # - PORT='${APP_PORT}':8080
