@@ -91,7 +91,7 @@ jobs:
       - name: Set up Docker Compose
         run: |
           # Завантаження нового Docker імеджу з Docker Hub
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:${{ env.TAG }}
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app1-go:${{ IMAGE_TAG }}
           # Запуск Docker Compose
           docker-compose -f docker-compose.yaml up -d
         env:
