@@ -44,25 +44,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: success
-        if: ${{ success() }}
-        uses: slackapi/slack-webhook-action@v1
+      - name: Slack notification on success
+        if: success()
+        uses: 8398a7/action-slack@v4
         with:
-          channel: C06441RS1EV
-          text: |
-            * Build success
-            * Workflow: CI+CD
-            * Branch: dev
+         channel: ${{ secrets.SLACK_CHANNEL }}
+         color: green
+         text: 'Build success: Workflow ${{ github.workflow }} on branch ${{ github.ref }}'
+         username: GitHub Actions
 
-      - name: failure
-        if: ${{ failure() }}
-        uses: slackapi/slack-webhook-action@v1
+      - name: Slack notification on failure
+        if: failure()
+        uses: 8398a7/action-slack@v4
         with:
-          channel: C06441RS1EV
-          text: |
-            * Build failed
-            * Workflow: CI+CD
-            * Branch: dev
+          channel: ${{ secrets.SLACK_CHANNEL }}
+          color: red
+          text: 'Build failed: Workflow ${{ github.workflow }} on branch ${{ github.ref }}'
+          username: GitHub Actions
 
   docker:
     name: Docker Image
