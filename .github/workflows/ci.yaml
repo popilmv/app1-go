@@ -38,27 +38,6 @@ jobs:
 
       - name: Build Go project
         run: go build
-        
-  slack:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Slack notification
-        uses: 8398a7/action-slack@v3
-        with:
-          channel: ${{ secrets.SLACK_CHANNEL }}
-          status: custom
-          fields: workflow,job,commit,repo
-          custom_payload: >
-            {
-              attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
-              }]
-            }
-        env:
-          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-        if: always()
       
   docker:
     name: Docker Image
