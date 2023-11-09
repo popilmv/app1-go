@@ -46,6 +46,7 @@ jobs:
       - name: Slack notification
         uses: 8398a7/action-slack@v3
         with:
+          channel: ${{ secrets.SLACK_CHANNEL }}
           status: custom
           fields: workflow,job,commit,repo
           custom_payload: >
@@ -56,7 +57,7 @@ jobs:
               }]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
         if: always()
       
   docker:
