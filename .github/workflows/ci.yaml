@@ -37,7 +37,7 @@ jobs:
         run: go get github.com/gorilla/mux
 
       - name: Build Go project
-        run: go build
+        run: go buil
         
       - name: Notify slack success
         if: success()
