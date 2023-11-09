@@ -40,9 +40,9 @@ jobs:
         run: go build
         
   slack:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+   runs-on: ubuntu-latest
+   needs: build
+   steps:
       - name: Slack notification	
         uses: 8398a7/action-slack@v3
         with:
