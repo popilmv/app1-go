@@ -38,6 +38,31 @@ jobs:
 
       - name: Build Go project
         run: go build
+        
+  slack:
+    name: Slack notification
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: success
+        if: ${{ success() }}
+        uses: slackapi/slack-webhook-action@v1
+        with:
+          channel: C06441RS1EV
+          text: |
+            * Build success
+            * Workflow: CI+CD
+            * Branch: dev
+
+      - name: failure
+        if: ${{ failure() }}
+        uses: slackapi/slack-webhook-action@v1
+        with:
+          channel: C06441RS1EV
+          text: |
+            * Build failed
+            * Workflow: CI+CD
+            * Branch: dev
 
   docker:
     name: Docker Image
