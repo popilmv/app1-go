@@ -41,25 +41,25 @@ jobs:
         
       - name: Notify slack success
         if: success()
+        uses: rtcamp/action-slack-notify@v2
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-        uses: voxmedia/github-action-slack-notify-build@v1
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
         with:
-          channel: itoutposts_intenship
-          status: SUCCESS
-          color: good
-      
-      - name: Notify slack fail
-        if: failure()
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel: itoutposts_intenship
-          status: FAILED
-          color: danger
+      	  channel: ${{ secrets.SLACK_CHANNEL }}
+      	  status: SUCCESS
+      	  color: good
 
-        
+      - name: Notify slack success
+        if: failure()
+        uses: rtcamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+        with:
+      	  channel: ${{ secrets.SLACK_CHANNEL }}
+      	  status: FAIL
+      	  color: danger 
       
   docker:
     name: Docker Image
