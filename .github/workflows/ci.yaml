@@ -46,9 +46,9 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_COLOR: ${{ job.status }}
         with:
-      	  channel: ${{ secrets.SLACK_CHANNEL }}
-      	  status: SUCCESS
-      	  color: good
+          channel: ${{ secrets.SLACK_CHANNEL }}
+          status: SUCCESS
+          color: good
 
       - name: Notify slack success
         if: failure()
@@ -57,9 +57,9 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_COLOR: ${{ job.status }}
         with:
-      	  channel: ${{ secrets.SLACK_CHANNEL }}
-      	  status: FAIL
-      	  color: danger 
+          channel: ${{ secrets.SLACK_CHANNEL }}
+          status: FAIL
+          color: danger 
       
   docker:
     name: Docker Image
