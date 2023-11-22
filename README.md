@@ -13,4 +13,3 @@ For CD we use comparing docker container tags - if a new image is available - th
 ```
  docker-compose -f docker-compose.yaml up -d
 ```
-
